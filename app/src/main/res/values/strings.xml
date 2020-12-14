@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PiccoReingTest</string>
+    <string name="item_delete_action">Delete</string>
+</resources>

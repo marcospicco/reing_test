@@ -20,8 +20,11 @@ class ListActivity : AppCompatActivity(), ListItemViewHolder.OnClickListener {
 
     private val viewModel =
         ListViewModel(
+            CoreDependenciesInstance.resolveSharedPreference(this),
             CoreDependenciesInstance.resolveScheduler(),
-            CoreDependenciesInstance.resolveGetPaymentMethods(),
+            CoreDependenciesInstance.resolveGetList(),
+            CoreDependenciesInstance.resolveGetLocalList(),
+            CoreDependenciesInstance.resolveDeleteItem(),
             CoreDependenciesInstance.PLATFORM
         )
 
@@ -66,8 +69,15 @@ class ListActivity : AppCompatActivity(), ListItemViewHolder.OnClickListener {
                 SwiperItemTouchHelper(
                     0,
                     ItemTouchHelper.LEFT,
-                    listRecycler.adapter as ListAdapter,
-                    this
+                    this,
+                    object: SwiperItemTouchHelper.SwipeEventListener {
+                        override fun onSwipe(position: Int) {
+                            val item = (listRecycler.adapter as ListAdapter).list[position]
+                            viewModel.deleteItem(item.id)
+                            (listRecycler.adapter as ListAdapter).removeItem(position)
+
+                        }
+                    }
                 )
             )
         itemTouchHelper.attachToRecyclerView(listRecycler)

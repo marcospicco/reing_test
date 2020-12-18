@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">PiccoReingTest</string>
     <string name="item_delete_action">Delete</string>
+
+    <!-- For Date -->
+    <string name="yesterday">Yesterday</string>
+    <string name="day">d</string>
+    <string name="hour">h</string>
+    <string name="minute">m</string>
 </resources>

@@ -13,8 +13,8 @@ import com.marcospicco.reingtest.presentation.list.view.adapter.ListAdapter
 class SwiperItemTouchHelper(
     private val dragDirs: Int,
     private val swipeDirs: Int,
-    private val adapter: ListAdapter,
-    private val context: Context
+    private val context: Context,
+    private val swipeEventListener: SwipeEventListener
 ): ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
     override fun onMove(
@@ -24,7 +24,7 @@ class SwiperItemTouchHelper(
     ) = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
-        adapter.removeItem(viewHolder.adapterPosition)
+        swipeEventListener.onSwipe(viewHolder.adapterPosition)
     }
 
     override fun onChildDraw(
@@ -69,5 +69,9 @@ class SwiperItemTouchHelper(
             actionState,
             isCurrentlyActive
         )
+    }
+
+    interface SwipeEventListener {
+        fun onSwipe(position: Int)
     }
 }

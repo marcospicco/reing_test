@@ -99,7 +99,7 @@ class ListViewModelTest {
     fun getListSuccess() {
 
         val single = Single.just(listModel)
-        Mockito.`when`(getList.doAction(sharedPreferences, platform)).thenReturn(single)
+        `when`(getList.doAction(sharedPreferences, platform)).thenReturn(single)
 
         lifecycleOwner.onCreate()
         schedulerProvider.triggerActions()
@@ -113,7 +113,7 @@ class ListViewModelTest {
     fun getListError() {
 
         val runtimeException = RuntimeException()
-        Mockito.`when`(getList.doAction(sharedPreferences, platform))
+        `when`(getList.doAction(sharedPreferences, platform))
             .thenReturn(Single.error(runtimeException))
 
         lifecycleOwner.onCreate()

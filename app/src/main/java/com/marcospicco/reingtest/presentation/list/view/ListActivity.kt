@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_list.*
 
 class ListActivity : AppCompatActivity(), ListItemViewHolder.OnClickListener {
 
-    private val viewModel =
+    private val viewModel by lazy {
         ListViewModel(
             CoreDependenciesInstance.resolveSharedPreference(this),
             CoreDependenciesInstance.resolveScheduler(),
@@ -27,6 +27,7 @@ class ListActivity : AppCompatActivity(), ListItemViewHolder.OnClickListener {
             CoreDependenciesInstance.resolveDeleteItem(),
             CoreDependenciesInstance.PLATFORM
         )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -70,7 +71,7 @@ class ListActivity : AppCompatActivity(), ListItemViewHolder.OnClickListener {
                     0,
                     ItemTouchHelper.LEFT,
                     this,
-                    object: SwiperItemTouchHelper.SwipeEventListener {
+                    object : SwiperItemTouchHelper.SwipeEventListener {
                         override fun onSwipe(position: Int) {
                             val item = (listRecycler.adapter as ListAdapter).list[position]
                             viewModel.deleteItem(item.id)

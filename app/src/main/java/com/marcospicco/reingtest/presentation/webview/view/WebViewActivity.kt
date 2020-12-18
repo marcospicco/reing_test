@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebView
@@ -21,11 +23,7 @@ class WebViewActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.gray)
-
-        val actionBar: ActionBar? = actionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        title = ""
+        setToolbar()
 
         webView.settings.javaScriptEnabled = true
 
@@ -43,6 +41,19 @@ class WebViewActivity: AppCompatActivity() {
         if (url.isNotEmpty()) {
             webView.loadUrl(url)
         }
+    }
+
+    fun setToolbar() {
+        window.statusBarColor = ContextCompat.getColor(this, R.color.gray)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.white)))
+
+        val actionBar: ActionBar? = actionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        title = ""
+
+        val backArrow = resources.getDrawable(R.drawable.back_arrow)
+        backArrow.setColorFilter(resources.getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
+        supportActionBar?.setHomeAsUpIndicator(backArrow);
     }
 
     fun resolveParams() {

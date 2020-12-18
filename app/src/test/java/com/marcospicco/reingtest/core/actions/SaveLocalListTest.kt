@@ -8,6 +8,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
@@ -16,6 +18,9 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
 class SaveLocalListTest {
+
+    @Mock
+    private val getDeletedItems = Mockito.mock(GetDeletedItems::class.java)
 
     private lateinit var listRepresentation: ListRepresentation
 
@@ -64,7 +69,7 @@ class SaveLocalListTest {
 
         SaveLocalList().doAction(prefs, listModel)
 
-        val result = GetLocalList().doAction(prefs)
+        val result = GetLocalList(getDeletedItems).doAction(prefs)
 
         assertEquals(result.list.size, listModel.list.size)
         assertEquals(result.list[0].id, listModel.list[0].id)

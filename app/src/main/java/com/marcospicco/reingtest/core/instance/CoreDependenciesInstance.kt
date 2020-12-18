@@ -16,7 +16,7 @@ object CoreDependenciesInstance {
 
     fun resolveGetList() = GetList(resolveListService(), resolveSaveList(), resolveGetDeleteItems())
 
-    fun resolveGetLocalList() = GetLocalList()
+    fun resolveGetLocalList() = GetLocalList(resolveGetDeleteItems())
 
     fun resolveSaveList() = SaveLocalList()
 
